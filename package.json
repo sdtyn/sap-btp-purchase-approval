@@ -30,11 +30,22 @@
           "database": "db.sqlite"
         }
       },
-      "[production]": {
-        "db": {
-          "kind": "hana"
+      "auth": {
+        "[development]": {
+          "kind": "mocked",
+          "users": {
+            "alice": {
+              "roles": ["Requester"]
+            },
+            "bob": {
+              "roles": ["Approver"]
+            },
+            "admin": {
+              "roles": ["Requester", "Approver"]
+            }
+          }
         },
-        "auth": {
+        "[production]": {
           "kind": "xsuaa"
         }
       }
