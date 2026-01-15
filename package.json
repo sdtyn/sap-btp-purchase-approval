@@ -1,0 +1,44 @@
+{
+  "name": "sap-btp-purchase-approval",
+  "version": "1.0.0",
+  "description": "Purchase Request & Approval Management System - SAP BTP Reference Project",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sdtyn/sap-btp-purchase-approval.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@sap/cds": "^9",
+    "express": "^4",
+    "@sap/xssec": "^4",
+    "@sap/hana-client": "^2"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^2",
+    "@sap/cds-dk": "^9"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "watch": "cds watch",
+    "build": "cds build --production"
+  },
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "database": "db.sqlite"
+        }
+      },
+      "[production]": {
+        "db": {
+          "kind": "hana"
+        },
+        "auth": {
+          "kind": "xsuaa"
+        }
+      }
+    }
+  },
+  "private": true
+}
