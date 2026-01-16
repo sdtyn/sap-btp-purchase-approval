@@ -1,0 +1,111 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <span>Artikel Katalog</span>
+  <span class="spacer"></span>
+  <button mat-raised-button color="accent" (click)="proceedToOrder()" 
+          [disabled]="selectedProducts().length === 0"
+          [matBadge]="getTotalItems()" matBadgeColor="warn">
+    <mat-icon>shopping_cart</mat-icon>
+    Zur Bestellung ({{ getTotalAmount() | currency:'EUR' }})
+  </button>
+  <button mat-icon-button (click)="logout()">
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>
+
+@if (loading()) {
+  <div class="loading-container">
+    <mat-spinner></mat-spinner>
+    <p>Katalog wird geladen...</p>
+  </div>
+} @else if (error()) {
+  <div class="error-container">
+    <mat-card color="warn">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>error</mat-icon>
+          Fehler
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ error() }}</p>
+        <button mat-raised-button color="primary" (click)="loadProducts()">
+          Erneut versuchen
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+} @else {
+  <div class="container">
+  <div class="sidebar">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Kategorien</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        @for (category of categories(); track category) {
+          <button mat-button class="category-btn" 
+                  [class.active]="selectedCategory() === category"
+                  (click)="selectedCategory.set(category)">
+            {{ category }}
+          </button>
+        }
+      </mat-card-content>
+    </mat-card>
+
+    @if (selectedProducts().length > 0) {
+      <mat-card class="cart-summary">
+        <mat-card-header>
+          <mat-card-title>Warenkorb</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          @for (selection of selectedProducts(); track selection.product.ID) {
+            <div class="cart-item">
+              <div class="item-info">
+                <strong>{{ selection.product.name }}</strong>
+                <div class="item-details">
+                  {{ selection.quantity }}x {{ selection.product.price | currency:'EUR' }}
+                </div>
+              </div>
+              <button mat-icon-button color="warn" (click)="removeProduct(selection.product.ID)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          }
+          <div class="cart-total">
+            <strong>Gesamt: {{ getTotalAmount() | currency:'EUR' }}</strong>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+
+  <div class="products-grid">
+    @for (product of getFilteredProducts(); track product.ID) {
+      <mat-card class="product-card">
+        <mat-card-header>
+          <mat-card-title>{{ product.name }}</mat-card-title>
+          <mat-card-subtitle>
+            <mat-chip>{{ product.category }}</mat-chip>
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="description">{{ product.description }}</p>
+          <div class="price">{{ product.price | currency:'EUR' }}</div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="selectProduct(product)">
+            <mat-icon>add_shopping_cart</mat-icon>
+            Hinzufügen
+          </button>
+          @if (getQuantity(product.ID) > 0) {
+            <mat-chip color="accent">{{ getQuantity(product.ID) }}x im Warenkorb</mat-chip>
+          }
+        </mat-card-actions>
+      </mat-card>
+    }
+  </div>
+  </div>
+}

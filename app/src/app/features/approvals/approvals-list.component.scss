@@ -1,0 +1,41 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.container {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 48px;
+}
+
+.error-card {
+  text-align: center;
+  
+  button {
+    margin-top: 16px;
+  }
+}
+
+.no-data {
+  text-align: center;
+  padding: 48px;
+  color: #666;
+}
+
+table {
+  width: 100%;
+}
+
+.action-btn {
+  margin-right: 8px;
+  
+  mat-icon {
+    margin-right: 4px;
+  }
+}

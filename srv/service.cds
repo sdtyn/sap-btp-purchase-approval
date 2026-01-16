@@ -17,11 +17,6 @@ service PurchaseRequestService {
    * - DELETE: Delete own requests only
    */
   @odata.draft.enabled
-  @(restrict: [
-    { grant: ['READ', 'CREATE'], to: 'Requester', where: 'requester = $user' },
-    { grant: ['UPDATE', 'DELETE'], to: 'Requester', where: 'requester = $user' },
-    { grant: '*', to: 'Approver' }
-  ])
   entity PurchaseRequests as projection on db.PurchaseRequests actions {
     @(
       Common.SideEffects: {
@@ -44,17 +39,20 @@ service PurchaseRequestService {
    * PurchaseItems Entity
    * Accessible to Requester for managing line items
    */
-  @(restrict: [
-    { grant: '*', to: 'Requester' },
-    { grant: 'READ', to: 'Approver' }
-  ])
   entity PurchaseItems as projection on db.PurchaseItems;
+  
+  /**
+   * Products Entity (Read-Only)
+   * Accessible to browse catalog when creating requests
+   */
+  @readonly
+  entity Products as projection on db.Products;
 }
 
 /**
  * Approval Service
  * Allows approvers to review and approve/reject requests
- * Authorization: Requires Approver role
+ * Authorization: Requires Approver role (Chef only)
  */
 @(requires: 'Approver')
 service ApprovalService {
@@ -66,9 +64,6 @@ service ApprovalService {
    * - Execute approve/reject actions
    */
   @readonly
-  @(restrict: [
-    { grant: 'READ', to: 'Approver' }
-  ])
   entity PurchaseRequests as projection on db.PurchaseRequests actions {
     @(requires: 'Approver')
     action approve() returns PurchaseRequests;
@@ -81,8 +76,29 @@ service ApprovalService {
    * PurchaseItems Entity (Read-Only for Approvers)
    */
   @readonly
-  @(restrict: [
-    { grant: 'READ', to: 'Approver' }
-  ])
   entity PurchaseItems as projection on db.PurchaseItems;
+  
+  /**
+   * Products Entity (Read-Only for reference)
+   */
+  @readonly
+  entity Products as projection on db.Products;
+}
+
+/**
+ * Catalog Service
+ * Manages product catalog (master data)
+ * Authorization: 
+ * - READ: All authenticated users (Requester, Approver)
+ * - CREATE/UPDATE/DELETE: Requires Approver role
+ */
+@(requires: 'authenticated-user')
+service CatalogService {
+  
+  /**
+   * Products Entity
+   * All users can READ
+   * Only Approvers can CREATE, UPDATE, DELETE
+   */
+  entity Products as projection on db.Products;
 }

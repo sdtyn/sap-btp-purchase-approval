@@ -9,9 +9,10 @@
   "license": "MIT",
   "dependencies": {
     "@sap/cds": "^9",
-    "express": "^4",
+    "@sap/hana-client": "^2",
     "@sap/xssec": "^4",
-    "@sap/hana-client": "^2"
+    "axios": "^1.13.2",
+    "express": "^4"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^2",
@@ -34,14 +35,16 @@
         "[development]": {
           "kind": "mocked",
           "users": {
-            "alice": {
-              "roles": ["Requester"]
+            "katja": {
+              "roles": [
+                "Requester"
+              ]
             },
-            "bob": {
-              "roles": ["Approver"]
-            },
-            "admin": {
-              "roles": ["Requester", "Approver"]
+            "markus": {
+              "roles": [
+                "Requester",
+                "Approver"
+              ]
             }
           }
         },

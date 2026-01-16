@@ -1,0 +1,77 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <span>Genehmigungen</span>
+  <span class="spacer"></span>
+  <button mat-icon-button (click)="logout()">
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div class="container">
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-spinner></mat-spinner>
+    </div>
+  } @else if (error()) {
+    <mat-card class="error-card">
+      <mat-card-content>
+        <p>{{ error() }}</p>
+        <button mat-raised-button color="primary" (click)="loadApprovals()">
+          Erneut versuchen
+        </button>
+      </mat-card-content>
+    </mat-card>
+  } @else {
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Offene Genehmigungen</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        @if (requests().length === 0) {
+          <p class="no-data">Keine offenen Genehmigungen</p>
+        } @else {
+          <table mat-table [dataSource]="requests()">
+            <ng-container matColumnDef="title">
+              <th mat-header-cell *matHeaderCellDef>Titel</th>
+              <td mat-cell *matCellDef="let request">{{ request.title }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalAmount">
+              <th mat-header-cell *matHeaderCellDef>Betrag</th>
+              <td mat-cell *matCellDef="let request">{{ request.totalAmount | currency:'EUR' }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="requester">
+              <th mat-header-cell *matHeaderCellDef>Angefordert von</th>
+              <td mat-cell *matCellDef="let request">{{ request.requester }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="createdAt">
+              <th mat-header-cell *matHeaderCellDef>Erstellt am</th>
+              <td mat-cell *matCellDef="let request">{{ request.createdAt | date:'short' }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Aktionen</th>
+              <td mat-cell *matCellDef="let request">
+                <button mat-raised-button color="primary" (click)="approve(request)" class="action-btn">
+                  <mat-icon>check</mat-icon>
+                  Genehmigen
+                </button>
+                <button mat-raised-button color="warn" (click)="reject(request)" class="action-btn">
+                  <mat-icon>close</mat-icon>
+                  Ablehnen
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        }
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

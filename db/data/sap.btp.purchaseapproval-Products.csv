@@ -1,0 +1,11 @@
+ID;name;description;price;category;imageUrl;stock;available;createdAt;createdBy;modifiedAt;modifiedBy
+1;Laptop Dell XPS 15;High-Performance Laptop für Entwicklung;1899.00;Hardware;;25;true;2026-01-01T00:00:00Z;system;2026-01-01T00:00:00Z;system
+2;Monitor LG UltraWide 34";34 Zoll UltraWide Monitor;599.00;Hardware;;50;true;2026-01-01T00:00:00Z;system;2026-01-01T00:00:00Z;system
+3;Tastatur Logitech MX Keys;Mechanische Tastatur;129.00;Hardware;;75;true;2026-01-01T00:00:00Z;system;2026-01-01T00:00:00Z;system
+4;Maus Logitech MX Master 3;Ergonomische Maus;99.00;Hardware;;100;true;2026-01-01T00:00:00Z;system;2026-01-01T00:00:00Z;system
+5;Headset Sony WH-1000XM5;Noise-Cancelling Kopfhörer;379.00;Hardware;;30;true;2026-01-01T00:00:00Z;system;2026-01-01T00:00:00Z;system
+6;Bürostuhl Herman Miller;Ergonomischer Bürostuhl;1299.00;Möbel;;15;true;2026-01-01T00:00:00Z;system;2026-01-01T00:00:00Z;system
+7;Schreibtisch höhenverstellbar;Elektrisch höhenverstellbarer Schreibtisch 160x80cm;699.00;Möbel;;20;true;2026-01-01T00:00:00Z;system;2026-01-01T00:00:00Z;system
+8;Drucker HP LaserJet Pro;Schwarz-Weiß Laserdrucker;299.00;Hardware;;40;true;2026-01-01T00:00:00Z;system;2026-01-01T00:00:00Z;system
+9;Whiteboard 180x120cm;Magnetisches Whiteboard mit Rollen;249.00;Bürobedarf;;10;true;2026-01-01T00:00:00Z;system;2026-01-01T00:00:00Z;system
+10;Büro-Material Set;Stifte, Blöcke, Hefter, etc.;49.00;Bürobedarf;;200;true;2026-01-01T00:00:00Z;system;2026-01-01T00:00:00Z;system
